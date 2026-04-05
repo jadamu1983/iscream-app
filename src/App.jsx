@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+     import { useState, useEffect, useRef } from "react";
 
 const SUPABASE_URL = "https://sfwrcqypezmriycekfsd.supabase.co";
 const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNmd3JjcXlwZXptcml5Y2VrZnNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0MTI2MDcsImV4cCI6MjA5MDk4ODYwN30.QEVD7twXB0DWO36o805bQ7OtDnRAU_GQoP9H4Asev2c";
@@ -344,10 +344,31 @@ export default function IScreamCustomer() {
         </div>
       )}
 
+      {/* TRUCKS LIST */}
+      {screen==="trucks" && (
+        <div className="se" style={{padding:"16px 16px 100px"}}>
+          <div style={{fontFamily:"'Fredoka One',cursive",fontSize:18,color:C.text,marginBottom:12}}>🚐 All Trucks Near You</div>
+          {trucks.map(truck=>(
+            <div key={truck.id} className="card-hover" onClick={()=>{setSelectedTruck(truck);setScreen("truck");}} style={{background:"white",borderRadius:20,padding:16,marginBottom:12,boxShadow:"0 4px 18px rgba(147,197,253,.18)",display:"flex",alignItems:"center",gap:14,border:`1.5px solid ${truck.color}44`}}>
+              <div style={{width:54,height:54,background:`linear-gradient(135deg,${truck.colorLight},${truck.color}55)`,borderRadius:16,display:"flex",alignItems:"center",justifyContent:"center",fontSize:28,flexShrink:0}}>🚐</div>
+              <div style={{flex:1}}>
+                <div style={{fontFamily:"'Fredoka One',cursive",fontSize:16,color:C.text}}>{truck.truck_name}</div>
+                <div style={{fontSize:12,color:C.textMuted,fontFamily:"'Nunito',sans-serif",fontWeight:600,marginTop:2}}>{truck.specialty}</div>
+                <div style={{display:"flex",gap:8,marginTop:6}}>
+                  <span style={{fontSize:11,background:truck.colorLight,color:C.text,padding:"2px 8px",borderRadius:20,fontFamily:"'Fredoka One',cursive"}}>⏱ {truck.eta}</span>
+                  <span style={{fontSize:11,color:"#FBBF24",fontFamily:"'Fredoka One',cursive"}}>★ {truck.rating}</span>
+                </div>
+              </div>
+              <div style={{color:truck.color,fontSize:22}}>›</div>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* CART */}
       {screen==="cart" && (
         <div className="se" style={{padding:"16px 16px 100px"}}>
-          <button onClick={()=>setScreen(selectedTruck?"truck":"map")} style={{background:"transparent",border:"none",fontFamily:"'Fredoka One',cursive",fontSize:16,color:C.pinkMid,cursor:"pointer",marginBottom:16}}>← Back</button>
+          <button onClick={()=>setScreen("trucks")} style={{background:"transparent",border:"none",fontFamily:"'Fredoka One',cursive",fontSize:16,color:C.pinkMid,cursor:"pointer",marginBottom:16}}>← Back</button>
           <div style={{fontFamily:"'Fredoka One',cursive",fontSize:22,color:C.text,marginBottom:6}}>Your Pre-Order 🛒</div>
           <div style={{background:`linear-gradient(135deg,${C.blueLight},${C.greenLight})`,borderRadius:14,padding:"10px 14px",marginBottom:16,fontSize:13,fontFamily:"'Nunito',sans-serif",fontWeight:700,color:"#059669",border:`1px solid ${C.green}`}}>
             ✅ These items are held for you — no more missing out!
@@ -415,16 +436,47 @@ export default function IScreamCustomer() {
         </div>
       )}
 
+      {/* PROFILE */}
+      {screen==="profile" && (
+        <div className="se" style={{padding:"24px 16px 100px"}}>
+          <div style={{textAlign:"center",marginBottom:24}}>
+            <div style={{fontSize:64,marginBottom:8}}>👤</div>
+            <div style={{fontFamily:"'Fredoka One',cursive",fontSize:22,color:C.text}}>My Account</div>
+            <div style={{fontSize:13,color:C.textMuted,fontFamily:"'Nunito',sans-serif",fontWeight:600,marginTop:4}}>Guest user</div>
+          </div>
+          {[
+            {icon:"📦",label:"My Orders",sub:"View past pre-orders"},
+            {icon:"📍",label:"My Demand Pins",sub:"Pins you have dropped"},
+            {icon:"🔔",label:"Notifications",sub:"Truck alerts near you"},
+            {icon:"💳",label:"Payment Methods",sub:"Manage cards"},
+            {icon:"⭐",label:"Favorites",sub:"Your favorite trucks"},
+          ].map(item=>(
+            <div key={item.label} style={{background:"white",borderRadius:18,padding:"14px 16px",marginBottom:10,display:"flex",alignItems:"center",gap:14,boxShadow:"0 3px 12px rgba(147,197,253,.15)",border:`1px solid ${C.border}`,cursor:"pointer"}}>
+              <div style={{fontSize:26,width:44,height:44,background:C.pinkLight,borderRadius:14,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>{item.icon}</div>
+              <div style={{flex:1}}>
+                <div style={{fontFamily:"'Fredoka One',cursive",fontSize:15,color:C.text}}>{item.label}</div>
+                <div style={{fontSize:12,color:C.textMuted,fontFamily:"'Nunito',sans-serif",fontWeight:600,marginTop:2}}>{item.sub}</div>
+              </div>
+              <div style={{color:C.pink,fontSize:20}}>›</div>
+            </div>
+          ))}
+          <div style={{marginTop:16,background:`linear-gradient(135deg,${C.pinkLight},${C.blueLight})`,borderRadius:18,padding:16,textAlign:"center",border:`1px solid ${C.pink}44`}}>
+            <div style={{fontFamily:"'Fredoka One',cursive",fontSize:15,color:C.text,marginBottom:6}}>🍦 Never miss the truck</div>
+            <div style={{fontSize:12,color:C.textMuted,fontFamily:"'Nunito',sans-serif",fontWeight:600}}>Sign up to save orders, get alerts, and guarantee your favorite items</div>
+          </div>
+        </div>
+      )}
+
       {/* NAV */}
       {screen!=="confirmation" && (
         <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:420,background:"white",borderTop:`1px solid ${C.border}`,padding:"8px 14px 22px",display:"flex",gap:4,boxShadow:"0 -8px 28px rgba(147,197,253,.15)"}}>
           <button className={`tab-btn ${screen==="map"?"active":""}`} onClick={()=>setScreen("map")}><span style={{fontSize:20}}>🗺️</span><span>Map</span></button>
-          <button className={`tab-btn ${screen==="truck"?"active":""}`} onClick={()=>selectedTruck&&setScreen("truck")}><span style={{fontSize:20}}>🚐</span><span>Trucks</span></button>
+          <button className={`tab-btn ${(screen==="trucks"||screen==="truck")?"active":""}`} onClick={()=>setScreen("trucks")}><span style={{fontSize:20}}>🚐</span><span>Trucks</span></button>
           <button className={`tab-btn ${screen==="cart"?"active":""}`} onClick={()=>setScreen("cart")} style={{position:"relative"}}>
             <span style={{fontSize:20}}>🛒</span><span>Order</span>
             {cartCount>0&&<div style={{position:"absolute",top:6,right:"calc(50% - 18px)",background:C.pinkMid,color:"white",borderRadius:50,width:16,height:16,fontSize:9,display:"flex",alignItems:"center",justifyContent:"center"}}>{cartCount}</div>}
           </button>
-          <button className="tab-btn"><span style={{fontSize:20}}>👤</span><span>Profile</span></button>
+          <button className={`tab-btn ${screen==="profile"?"active":""}`} onClick={()=>setScreen("profile")}><span style={{fontSize:20}}>👤</span><span>Profile</span></button>
         </div>
       )}
     </div>
