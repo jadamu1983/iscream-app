@@ -1,0 +1,24 @@
+{
+  "name": "I Scream Driver",
+  "short_name": "IScream Driver",
+  "description": "I Scream driver dashboard — earn more with live demand data",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F0A1E",
+  "theme_color": "#F472B6",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
